@@ -15,4 +15,4 @@ $ python -m SimpleHTTPServer [PORT]
 
 ## APIs
  * [Microsoft LUIS api](https://luis.ai)
- * [Chrome webkitSpeechRecognition]
+ * Chrome webkitSpeechRecognition
