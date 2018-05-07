@@ -1,6 +1,0 @@
-상희형
-LED
-부저
-motor됨
-
-Wifi shield 상태 이상 : 전류가 같이 흐름
