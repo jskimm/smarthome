@@ -1,0 +1,22 @@
+team name : 불꺼조
+
+만들것
+인공지능 플랫폼
+음성엔진과 대화엔진을 활용한 smarthome 서비스 
+aka 윤열
+
+음성인식API( 음성엔진 )
+LUIS (대화 엔진)
+
+iot의 중요성 대두
+
+엄청난 속도로 발전하고 있는 iot시장
+kakao ai, lg, kt, 등 
+쏟아져 나오는 iot 기기
+
+smart tv, smart 냉장고, computer 등을 한  번에 관리할 수 있는 platform의 부재
+
+
+윤열이와 함께라면 더욱 삶의 질을 높여줄 것임
+
+machine learning 기술의 발전
