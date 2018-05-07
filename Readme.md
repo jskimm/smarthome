@@ -1,6 +1,6 @@
 # Smarthome service with voice recognition
-음성 엔진와 대화 엔진을 활용한 Smarthome 플랫폼
-OSS Project
+```음성 엔진와 대화 엔진을 활용한 Smarthome 플랫폼
+OSS Project```
 
 ## Usage
 
