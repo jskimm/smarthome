@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>SMARTHOME SERVICE</title>
+  <link href="css/animate.css" rel="stylesheet" />
+  <link href="css/style.css" rel="stylesheet" />
+
+  <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
+  <script src="js/siriwave9.js"></script>
+
+</head>
+<body>
+  <div class="main">
+    <h1 class="intent"></h1>
+    <h1 class="text animated fadeInUp">
+      안녕하세요!<br>무엇을 도와드릴까요?
+    </h1>
+    <div id="siri-container"></div>
+  </div>
+  <script>
+    var SW = new SiriWave9({
+    width: 400,
+    height: 100,
+    speed: 0.12,
+    amplitude: 0,
+    container: document.getElementById('siri-container'),
+    autostart: true,
+    style: 'ios9'
+  });
+
+  $(function() {
+    $('.btn').on('click', function() {
+      console.log('click');
+      $('.text').removeClass('animated fadeInUp');
+      setTimeout(function() {
+        $('.text').addClass('animated fadeInUp');
+      }, 100);
+    });
+  });
+  </script>
+
+</body>
+</html>
