@@ -36,6 +36,7 @@ recognition.onresult = function(event) {
         res.entities.forEach(function(item) {
           console.log(item);
           var txt = sentence;
+          console.log('txt : '+txt);
           var highlight = $('<b/>').text(txt.slice(item.startIndex, item.endIndex+1));
           highlight.addClass('highlight');
           $('.text').addClass('fadeInUp');
