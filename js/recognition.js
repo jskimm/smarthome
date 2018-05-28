@@ -33,52 +33,52 @@ recognition.onresult = function(event) {
           $('.intent').text("빨간 불을 껐습니다.");
           break;
         case "Red_light_on":
-          xhr.open('GET',host + 'HR')
+          xhr_open('GET', 'HR')
           $('.intent').text("빨간 불을 컸습니다.");
           break;
 
         case "Green_light_off":
-          xhr.open('GET',host + 'LG');
+          xhr_open('GET', 'LG');
           $('.intent').text("녹색 불을 껐습니다.");
           break;
         case "Green_light_on":
-          xhr.open('GET',host + 'HG');
+          xhr_open('GET', 'HG');
           $('.intent').text("녹색 불을 컸습니다.");
           break;
         case "Blue_light_off":
-          xhr.open('GET',host + 'LB');
+          xhr_open('GET', 'LB');
           $('.intent').text("파랑 불을 껐습니다.");
           break;
         case "Blue_light_on":
-          xhr.open('GET',host + 'HB');
+          xhr_open('GET', 'HB');
           $('.intent').text("파랑 불을 컸습니다.");
           break;
         
         /* TEMP HUM CHECK */ 
         case "temperature_humidity check":
-          xhr.open('GET',host + 'HTEM');
+          xhr_open('GET', 'HTEM');
           $('.intent').text("현재 온도는 10도 습도는 30%입니다.");
           break;
 
         /* GAS CHECK */ 
         case "gas_check": 
-          xhr.open('GET',host + 'HGAS');
+          xhr_open('GET', 'HGAS');
           $('.intent').text("현재 가스 수치는 100 입니다.");
           break;
 
         /* DUST CHECK */ 
         case "Dust_check":
-          xhr.open('GET',host + 'HDUST');
+          xhr_open('GET', 'HDUST');
           $('.intent').text("현재 미세먼지는 30으로 좋음 상태입니다.");
           break;
         
         /* MUSIC ON/OFF */
         case "music_off":
-          xhr.open('GET',host + 'HFUNBU');
+          xhr_open('GET', 'HFUNBU');
           $('.intent').text("음악을 재생합니다.");
           break;
         case " music_on":
-          xhr.open('GET',host + 'HWARMBU');
+          xhr_open('GET', 'HBU');
           $('.intent').text("음악을 재생합니다.");
           break;
 
