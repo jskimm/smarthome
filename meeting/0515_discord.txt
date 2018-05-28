@@ -1,0 +1,8 @@
+윤열 : 요구명세서에 있는 기능 7가지를 LUIS내에서 예상 질문을 intent,entitiy 로 정리하고 query문 얼쌍형한테 넘겨주기
+
+상희 : Restful api 구현
+서버로 -> turn on_ok 리턴
+
+얼싼 : 지금까지 만들어진 백엔드 코드 테스트
+그리고 7개 기능 구현
+turn on, turn off부터

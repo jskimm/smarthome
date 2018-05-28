@@ -5,15 +5,18 @@ char ssid[] = "Sang";      // 공유기 이름
 char pass[] = "99999999";   // 공유기 비밀번호
 int keyIndex = 0;                 // your network key Index number (needed only for WEP)
 int status = WL_IDLE_STATUS;
+WiFiServer server(80); // 웹서버 사용 포트 번호 80
+
 Servo servo;
-WiFiServer server(80); // 웹서버 사용 포트 번호 80 81 82 
+const int gasPin = A0;
 
 void setup() {
   Serial.begin(9600);      // 9600
   pinMode(9, OUTPUT);      // Red led 9번 핀 
   pinMode(8, OUTPUT);      // Green led 8
-  pinMode(3, OUTPUT);      // Blue led 3
-  servo.attach(2); // 서보모터
+  pinMode(5, OUTPUT);      // Blue led 5
+  
+  servo.attach(2);
 
   // check for the presence of the shield:
   if (WiFi.status() == WL_NO_SHIELD) {
@@ -65,13 +68,17 @@ void loop() {
         client.print("Click <a href=\"/HG\">here</a> turn the Green LED on pin 8 on<br>");
         client.print("Click <a href=\"/LG\">here</a> turn the Green LED on pin 8 off<br>");
 
-        client.print("Click <a href=\"/HB\">here</a> turn the Blue LED on pin 3 on<br>");
-        client.print("Click <a href=\"/LB\">here</a> turn the Blue LED on pin 3 off<br>");
+        client.print("Click <a href=\"/HB\">here</a> turn the Blue LED on pin 4 on<br>");
+        client.print("Click <a href=\"/LB\">here</a> turn the Blue LED on pin 4 off<br>");
 
         client.print("Click <a href=\"/HS\">here</a> servo motor angle 0~180<br>");
         client.print("Click <a href=\"/LS\">here</a> servo motor angle 180~0<br>");
 
         client.print("Click <a href=\"/HBU\">here</a> BUSER sound 1sec<br>");
+
+        client.print("Click <a href=\"/HGAS\">here</a> GAS check <br>");
+        client.print(analogRead(gasPin));
+        
         // The HTTP response ends with another blank line:
         client.println();
         // break out of the while loop:
@@ -85,60 +92,63 @@ void loop() {
       currentLine += c;      // add it to the end of the currentLine
     }
     
-    // Check to see if the client request was "GET /H" or "GET /L":
-    int angle = 0;
     if (currentLine.endsWith("GET /HR")) {
-      digitalWrite(9, HIGH);               // GET /HR RED LED ON
+      digitalWrite(9, HIGH);               // GET /HR
       digitalWrite(8, LOW);  
-      digitalWrite(3, LOW);  
+      digitalWrite(5, LOW);  
     }
     if (currentLine.endsWith("GET /LR")) {
-      digitalWrite(9, LOW);                // GET /LR RED LED OFF
+      digitalWrite(9, LOW);                // GET /LR
      }
      
     if (currentLine.endsWith("GET /HG")) {
-      digitalWrite(8, HIGH);               // GET /HG 
+      digitalWrite(8, HIGH);               // GET /HG
       digitalWrite(9, LOW);
-      digitalWrite(3, LOW);    
+      digitalWrite(5, LOW);    
     }
     if (currentLine.endsWith("GET /LG")) {
       digitalWrite(8, LOW);                // GET /LG
      }
      
      if (currentLine.endsWith("GET /HB")) {
-      digitalWrite(3, HIGH);               // GET /HB 
+      digitalWrite(5, HIGH);               // GET /HB
       digitalWrite(9, LOW);
       digitalWrite(8, LOW);    
     }
     if (currentLine.endsWith("GET /LB")) {
-      digitalWrite(3, LOW);                // GET /LB
+      digitalWrite(5, LOW);                // GET /LB
      }
      
-     if (currentLine.endsWith("GET /HS")) {
-      for(angle = 0; angle < 180; angle++)  // 서보모터 0~180
-      { 
+     //servo
+    int angle = 0;
+    if (currentLine.endsWith("GET /HS")) {
+     for(angle = 0; angle < 180; angle++) 
+     { 
         servo.write(angle); 
         delay(15); 
-      } 
+     } 
     }
+    
     if (currentLine.endsWith("GET /LS")) {
-      for(angle = 180; angle > 0; angle--)  // 서보모터 180~0
+      for(angle = 180; angle > 0; angle--) 
       { 
         servo.write(angle); 
         delay(15); 
       } 
      }
-     // 부저
-     int sp = 4; 
+     
+     int speakerpin = 4; //스피커가 연결된 디지털핀 설정
      int note[] = {2093,2349,2637,2793,3136,3520,3951,4186}; //도레미파솔라시도
      if (currentLine.endsWith("GET /HBU")) {
-       int elementCount = sizeof(note) / sizeof(int);
+       digitalWrite(5, LOW);
+       int elementCount = sizeof(음표) / sizeof(int);
        for (int i=0; i < elementCount; i++)    //note를 play
        {
-          tone(sp,note[i],500);
+          tone(speakerpin,note[i],500);
           delay(750);
        }
      }
+     
    }
  }
 
