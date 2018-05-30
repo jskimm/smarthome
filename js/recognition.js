@@ -9,13 +9,36 @@ recognition.lang = "ko-KR";
 recognition.onresult = function(event) {
   var sentence = event.results[event.results.length-1][0].transcript.trim();
   var url = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/32f607a4-d5db-420d-8676-2d97d034dd92?subscription-key=8eb8c0a2793f41bea76e8fa347684af7&verbose=true&timezoneOffset=0&q=';
+  var host = 'http://192.168.43.142/';
   $('.text').removeClass('fadeInUp');
   console.log(sentence);
   
   /* XHR implementation */
   function xhr_open(method, path)  {
     var xhr = new XMLHttpRequest();
-    xhr.open(method, 'http://192.168.43.142/'+path);
+    xhr.onreadystatechange = function() {
+      if(xhr.readyState==4 && xhr.status==200) {
+        return true;
+      }
+      else return false;
+    }
+    xhr.open(method, host+path);
+    xhr.send();
+  }
+
+  function xhr_get_value(method, id, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open(method, host);
+    xhr.onreadystatechange = function() {
+      if(xhr.readyState==4 && xhr.status==200) {
+        function parseHTML(html) {
+            var t = document.createElement('template');
+            t.innerHTML = html;
+            return t.content.cloneNode(true);
+        }
+        callback(parseHTML(xhr.response).getElementById(id).innerHTML);
+      } else return false;
+    }
     xhr.send();
   }
   
@@ -55,21 +78,26 @@ recognition.onresult = function(event) {
           break;
         
         /* TEMP HUM CHECK */ 
-        case "temperature_humidity check":
-          xhr_open('GET', 'HTEM');
-          $('.intent').text("현재 온도는 10도 습도는 30%입니다.");
+        case "Temp & humidity":
+          xhr_get_value('GET', 'tmp', function(tmp) {
+            xhr_get_value('GET', 'hum', function(hum) {
+              $('.intent').text("현재 온도는 "+tmp+"도 습도는 "+hum+"%입니다.");
+            });
+          });
           break;
 
         /* GAS CHECK */ 
-        case "gas_check": 
-          xhr_open('GET', 'HGAS');
-          $('.intent').text("현재 가스 수치는 100 입니다.");
+        case "Gas_check": 
+          xhr_get_value('GET', 'gas', function(gas) {
+            $('.intent').text("현재 가스 수치는 "+gas+" 입니다.");
+          });
           break;
 
         /* DUST CHECK */ 
         case "Dust_check":
-          xhr_open('GET', 'HDUST');
-          $('.intent').text("현재 미세먼지는 30으로 좋음 상태입니다.");
+          xhr_get_value('GET', 'dust', function(dust) {
+            $('.intent').text("현재 미세먼지 농도는 "+dust+" 입니다.");
+          });
           break;
         
         /* MUSIC ON/OFF */
@@ -83,9 +111,11 @@ recognition.onresult = function(event) {
           break;
 
         /* SEARCH */
-        case "none":
-          $('.intent').text("검색 출력 내용.");
-            break;
+        case "None":
+          window.open('https://www.google.com/search?q='+'','_blank');
+          break;
+
+        /* EXCEPTION */ 
         case "Exception":
           $('.intent').text("")
           break;
