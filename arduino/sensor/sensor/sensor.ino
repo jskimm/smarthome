@@ -7,9 +7,9 @@
 #define DHTPIN 10      
 #define DHTTYPE DHT11 
 DHT dht(DHTPIN, DHTTYPE);
-int t=0;
-int h =0;
-String data;
+int t = 0; //tmep
+int h = 0; //humid
+String data; // 출력용
 
 /* WIFI */
 char ssid[] = "Sang"; 
@@ -80,12 +80,12 @@ void setup() {
 void loop() {
   
   /* TEMP & HUMID */
-  data = "&lt;p id='tmp'&gt";
+  data = "<p id='tmp'>";
   data.concat(t);
-  data.concat("&lt;/p&gt;");
-  data.concat("<br>&lt;p id='hum'&gt;");
+  data.concat("</p>");
+  data.concat("<br><p id='hum'>");
   data.concat(h);
-  data.concat("&lt;/p&gt;");
+  data.concat("</p>");
 
   /* DUST SENSOR */
   digitalWrite(ledPower,LOW); // power on the LED
@@ -97,7 +97,7 @@ void loop() {
   // 0 - 5V mapped to 0 - 1023 integer values
   // recover voltage
   calcVoltage = voMeasured * (5.0 / 1024.0);
-  dustDensity = 0.17 * calcVoltage - 0.1;
+  dustDensity = (0.17 * calcVoltage - 0.1)*1000;
   
   //Serial.println(dustDensity); // unit: mg/m3
 
@@ -143,21 +143,22 @@ void loop() {
         //client.print(" <a href=\"/HKITL\">here</a> KITCHEN on<br>");
         //client.print(" <a href=\"/LKITL\">here</a> KITCHEN off<br>");
 
-        client.print("<a href=\"/HS\">here</a> servo 0~180<br>");
-        client.print("<a href=\"/LS\">here</a> servo 180~0<br>");
+        client.print("<a href=\"/LS\">here</a> close<br>");
+        client.print("<a href=\"/HS\">here</a> open<br>");
 
-        client.print("<a href=\"/HBU\">here</a> BUSER <br>");
-
-        client.print("&lt;p id='gas'&gt;");
+        client.print("<a href=\"/HFUNBU\">here</a> FUN <br>");
+        client.print("<a href=\"/HWARMBU\">here</a> WARM <br>");
+        
+        client.print("<p id='gas'>");
         client.print(analogRead(gasPin));
-        client.print("&lt;/p&gt;");
+        client.print("</p>");
         client.print("<br>");
         
         client.print(data);
         
-        client.print("<br>&lt;p id='dust'&gt;");
+        client.print("<p id='dust'>");
         client.print(dustDensity);
-        client.print("&lt;/p&gt;");
+        client.print("</p>");
         
         // The HTTP response ends with another blank line:
         client.println();
@@ -224,30 +225,40 @@ void loop() {
      
     /* SERVO MOTOR */
     int angle = 0;
-    if (currentLine.endsWith("GET /HS")) {
-     for(angle = 0; angle < 180; angle++) 
+    if (currentLine.endsWith("GET /LS")) {
+     for(angle = 80; angle < 210; angle++) 
      { 
-        servo.write(angle);                 // WINDOW OPEN 0~180
+        servo.write(angle);                 // WINDOW close 80~210
         delay(15); 
      } 
     }
-    if (currentLine.endsWith("GET /LS")) {
-      for(angle = 180; angle > 0; angle--) 
+    if (currentLine.endsWith("GET /HS")) {
+      for(angle = 180; angle > 80; angle--) 
       { 
-        servo.write(angle);                 // WINDOW CLOSE 180~0
+        servo.write(angle);                 // WINDOW open 180~80
         delay(15); 
       } 
     }
       
      /* BUSSOR SENSOR */
-    int speakerpin = 4; //스피커가 연결된 디지털핀 설정
+    int speakerpin = 4; 
     int note[] = {2093,2349,2637,2793,3136,3520,3951,4186}; //도레미파솔라시도
-    if (currentLine.endsWith("GET /HBU")) {
+    if (currentLine.endsWith("GET /HFUNBU")) {
       digitalWrite(5, LOW);
-      int elementCount = sizeof(음표) / sizeof(int);
-      for (int i=0; i < elementCount; i++)    //note를 play
+      int elementCount = sizeof(note) / sizeof(int);
+      for (int i=0; i < elementCount; i++)
       {
          tone(speakerpin,note[i],500);
+         delay(750);
+      }
+    }
+    int note2[] = {4186,3951,3520,3136,2793,2637,2349,2093}; //도시라솔파미레도
+    if (currentLine.endsWith("GET /HWARMBU")) {
+      digitalWrite(5, LOW);
+      int elementCount = sizeof(note2) / sizeof(int);
+      for (int i=0; i < elementCount; i++)    
+      {
+         tone(speakerpin,note2[i],500);
          delay(750);
       }
     }
