@@ -111,7 +111,7 @@ recognition.onresult = function(event) {
           break;
 
         /* SEARCH */
-        case "None":
+        case "Search":
           window.open('https://www.google.com/search?q='+'','_blank');
           break;
 
