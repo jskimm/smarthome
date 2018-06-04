@@ -136,11 +136,12 @@ recognition.onresult = function(event) {
 
         /* SEARCH */
         case "Search":
-          var keyPhrase = res.entities[0];
-          if (keyPhrase.type == "builtin.keyPhrase"){
-            console.log(keyPhrase.entity+" 검색");
-            window.open('https://www.google.com/search?q='+keyPhrase.entity,'_blank');
-          }
+          res.entities.forEach(function(item) {
+            if (item.type == "builtin.keyPhrase"){
+              console.log(item.entity+" 검색");
+              window.open('https://www.google.com/search?q='+item.entity,'_blank');
+            }
+          });
           break;
 
         /* EXCEPTION */ 
