@@ -52,14 +52,13 @@ recognition.onresult = function(event) {
         /* LIGHT ON/OFF */
         case "All_light_off":
           xhr_open('GET', 'LALL');
-          $('.intent').text("전제 불을 껐습니다.");
+          $('.intent').text("모든 불을 껐습니다.");
           break;
  
           case "All_light_on":
           xhr_open('GET', 'HALL');
-          $('.intent').text("전제 불을 켰습니다.");
+          $('.intent').text("모든 불을 켰습니다.");
           break;
-
 
         case "Red_light_off":
           xhr_open('GET', 'LR');
@@ -119,11 +118,11 @@ recognition.onresult = function(event) {
         case "Gas_check": 
           xhr_get_value('GET', 'gas', function(gas) {
             if(gas<500){
-              $('.intent').text("현재 가스 수치는 "+gas+" 입니다.\n 현재 미세먼지 안전.");  
+              $('.intent').text("현재 가스 수치는 "+gas+" 입니다.");  
             }else if(gas >=500 && gas<700) {
-              $('.intent').text("현재 가스 수치는 "+gas+" 입니다.\n 현재 미세먼지 보통.");
+              $('.intent').text("현재 가스 수치는 "+gas+" 입니다.");
             }else{
-              $('.intent').text("현재 가스 수치는 "+gas+" 입니다.\n 현재 미세먼지 위험.");
+              $('.intent').text("현재 가스 수치는 "+gas+" 입니다.");
             }
           });
           break;
@@ -132,11 +131,11 @@ recognition.onresult = function(event) {
         case "Dust_check":
           xhr_get_value('GET', 'dust', function(dust) {
             if(dust<0){
-              $('.intent').text("현재 미세먼지 농도는 "+dust+" 입니다.\n 현재 미세먼지 좋다.");  
+              $('.intent').text("현재 미세먼지 농도는 좋음 입니다.");  
             }else if(dust >=0 && dust<100) {
-              $('.intent').text("현재 미세먼지 농도는 "+dust+" 입니다.\n 현재 미세먼지 보통.");
+              $('.intent').text("현재 미세먼지 농도는 보통 입니다.");
             }else{
-              $('.intent').text("현재 미세먼지 농도는 "+dust+" 입니다.\n 현재 미세먼지 나쁘다.");
+              $('.intent').text("현재 미세먼지 농도는 나쁨 입니다.");
             }
            
           });
