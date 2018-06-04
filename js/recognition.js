@@ -100,14 +100,27 @@ recognition.onresult = function(event) {
         /* GAS CHECK */ 
         case "Gas_check": 
           xhr_get_value('GET', 'gas', function(gas) {
-            $('.intent').text("현재 가스 수치는 "+gas+" 입니다.");
+            if(gas<500){
+              $('.intent').text("현재 가스 수치는 "+gas+" 입니다.\n 현재 미세먼지 안전.");  
+            }else if(gas >=500 && gas<700) {
+              $('.intent').text("현재 가스 수치는 "+gas+" 입니다.\n 현재 미세먼지 보통.");
+            }else{
+              $('.intent').text("현재 가스 수치는 "+gas+" 입니다.\n 현재 미세먼지 위험.");
+            }
           });
           break;
 
         /* DUST CHECK */ 
         case "Dust_check":
           xhr_get_value('GET', 'dust', function(dust) {
-            $('.intent').text("현재 미세먼지 농도는 "+dust+" 입니다.");
+            if(dust<0){
+              $('.intent').text("현재 미세먼지 농도는 "+dust+" 입니다.\n 현재 미세먼지 좋다.");  
+            }else if(dust >=0 && dust<100) {
+              $('.intent').text("현재 미세먼지 농도는 "+dust+" 입니다.\n 현재 미세먼지 보통.");
+            }else{
+              $('.intent').text("현재 미세먼지 농도는 "+dust+" 입니다.\n 현재 미세먼지 나쁘다.");
+            }
+           
           });
           break;
         
