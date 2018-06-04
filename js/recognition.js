@@ -55,7 +55,7 @@ recognition.onresult = function(event) {
           xhr_open('GET', 'LALL');
           $('.intent').text("전제 불을 껐습니다.");
           break;
-
+ 
           case "All_light_on":
           xhr_open('GET', 'HALL');
           $('.intent').text("전제 불을 켰습니다.");
@@ -88,6 +88,14 @@ recognition.onresult = function(event) {
           $('.intent').text("파랑 불을 컸습니다.");
           break;
         
+          case "Blue_light_on":
+          xhr_open('GET', 'HLIVL');
+          $('.intent').text("거실 불을 컸습니다.");
+          break;
+        case "Blue_light_on":
+          xhr_open('GET', 'LLIVL');
+          $('.intent').text("거실 불을 컸습니다.");
+          break;  
         /* TEMP HUM CHECK */ 
         case "Temp & humidity":
           xhr_get_value('GET', 'tmp', function(tmp) {
@@ -147,11 +155,11 @@ recognition.onresult = function(event) {
 
         /* SEARCH */
         case "Search":
-          var Search = res.entities[0];
-          if (Search.type == "builtin.Search"){
-            console.log(Search.entity+" 검색");
-            window.open('https://www.google.com/search?q='+Search.entity,'_blank');
-          }
+          res.entities.forEach(function(item) {
+            if (item.type == "builtin.keyPhrase"){
+              window.open('https://www.google.com/search?q='+item.entity,'_blank');
+            }
+          });
           break;
 
         /* EXCEPTION */ 
