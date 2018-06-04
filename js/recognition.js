@@ -50,6 +50,17 @@ recognition.onresult = function(event) {
 
       switch (res.topScoringIntent.intent) {
         /* LIGHT ON/OFF */
+        case "All_light_off":
+          xhr_open('GET', 'LALL');
+          $('.intent').text("전제 불을 껐습니다.");
+          break;
+ 
+          case "All_light_on":
+          xhr_open('GET', 'HALL');
+          $('.intent').text("전제 불을 켰습니다.");
+          break;
+
+
         case "Red_light_off":
           xhr_open('GET', 'LR');
           $('.intent').text("빨간 불을 껐습니다.");
@@ -76,6 +87,14 @@ recognition.onresult = function(event) {
           $('.intent').text("파랑 불을 컸습니다.");
           break;
         
+          case "Blue_light_on":
+          xhr_open('GET', 'HLIVL');
+          $('.intent').text("거실 불을 컸습니다.");
+          break;
+        case "Blue_light_on":
+          xhr_open('GET', 'LLIVL');
+          $('.intent').text("거실 불을 컸습니다.");
+          break;  
         /* TEMP HUM CHECK */ 
         case "Temp & humidity":
           xhr_get_value('GET', 'tmp', function(tmp) {
