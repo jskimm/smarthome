@@ -86,6 +86,17 @@ recognition.onresult = function(event) {
           });
           break;
 
+        /* WINDOW */ 
+        case "window_open": 
+          xhr_open('GET', 'HS');
+          $('.intent').text("창문이 열립니다.");
+          break;
+
+        case "window_close": 
+          xhr_open('GET', 'LS');
+          $('.intent').text("창문이 닫힙니다.");
+          break;
+
         /* GAS CHECK */ 
         case "Gas_check": 
           xhr_get_value('GET', 'gas', function(gas) {
