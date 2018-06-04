@@ -147,10 +147,10 @@ recognition.onresult = function(event) {
 
         /* SEARCH */
         case "Search":
-          var keyPhrase = res.entities[0];
-          if (keyPhrase.type == "builtin.keyPhrase"){
-            console.log(keyPhrase.entity+" 검색");
-            window.open('https://www.google.com/search?q='+keyPhrase.entity,'_blank');
+          var Search = res.entities[0];
+          if (Search.type == "builtin.keyPhrase"){
+            console.log(Search.entity+" 검색");
+            window.open('https://www.google.com/search?q='+Search.entity,'_blank');
           }
           break;
 
