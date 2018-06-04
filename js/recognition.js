@@ -51,6 +51,17 @@ recognition.onresult = function(event) {
 
       switch (res.topScoringIntent.intent) {
         /* LIGHT ON/OFF */
+        case "All_light_off":
+          xhr_open('GET', 'LALL');
+          $('.intent').text("전제 불을 껐습니다.");
+          break;
+
+          case "All_light_on":
+          xhr_open('GET', 'HALL');
+          $('.intent').text("전제 불을 켰습니다.");
+          break;
+
+
         case "Red_light_off":
           xhr_open('GET', 'LR');
           $('.intent').text("빨간 불을 껐습니다.");
