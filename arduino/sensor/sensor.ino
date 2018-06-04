@@ -216,13 +216,24 @@ void loop() {
       digitalWrite(8, LOW);                // LOW INNER ROOM LED
     }
     
-    if (currentLine.endsWith("GET /HKITL")) {
-      digitalWrite(6, HIGH);                // HIGH KITCHEN LED
+    if (currentLine.endsWith("GET /HLIVL ")) {
+      digitalWrite(6, HIGH);                // HIGH LIVING ROOM LED
     }
-    if (currentLine.endsWith("GET /LKITL")) {
-      digitalWrite(6, LOW);                // LOW KITCHEN LED
+    if (currentLine.endsWith("GET /LLIVL")) {
+      digitalWrite(6, LOW);                // LOW LIVING ROOM LED
     }
      
+    /*ALL LED CONTROLL*/
+    if (currentLine.endsWith("GET /HALL")) {
+      digitalWrite(6, HIGH);                // HIGH ALL ROOM LED ON
+      digitalWrite(8, HIGH);
+    }
+    if (currentLine.endsWith("GET /LALL")) {
+      digitalWrite(6, LOW);                // LOW ALL ROOM LED OFF
+      digitalWrite(8, LOW); 
+    }
+
+
     /* SERVO MOTOR */
     int angle = 0;
     if (currentLine.endsWith("GET /LS")) {

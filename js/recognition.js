@@ -1,10 +1,10 @@
 /* SPEECH RECOGNITION SETUP */
 var recognition = new webkitSpeechRecognition();
-recognition.continuous = true;
+recognition.continuous = false;
 // recognition.interimResults = true;
 console.log(recognition);
 recognition.lang = "ko-KR";
-
+var q = '';
 /* COMPONENT */
 recognition.onresult = function(event) {
   var sentence = event.results[event.results.length-1][0].transcript.trim();
@@ -97,6 +97,17 @@ recognition.onresult = function(event) {
           });
           break;
 
+        /* WINDOW */ 
+        case "window_open": 
+          xhr_open('GET', 'HS');
+          $('.intent').text("창문이 열립니다.");
+          break;
+
+        case "window_close": 
+          xhr_open('GET', 'LS');
+          $('.intent').text("창문이 닫힙니다.");
+          break;
+
         /* GAS CHECK */ 
         case "Gas_check": 
           xhr_get_value('GET', 'gas', function(gas) {
@@ -136,7 +147,11 @@ recognition.onresult = function(event) {
 
         /* SEARCH */
         case "Search":
-          window.open('https://www.google.com/search?q='+'','_blank');
+          var keyPhrase = res.entities[0];
+          if (keyPhrase.type == "builtin.keyPhrase"){
+            console.log(keyPhrase.entity+" 검색");
+            window.open('https://www.google.com/search?q='+keyPhrase.entity,'_blank');
+          }
           break;
 
         /* EXCEPTION */ 
@@ -151,18 +166,19 @@ recognition.onresult = function(event) {
         $('.text').addClass('fadeInUp');
         $('.text').text(sentence);
       }
-      res.entities.forEach(function(item) {
-        console.log(item);
-        var txt = sentence;
-        console.log('txt : '+txt);
-        var highlight = $('<b/>').text(txt.slice(item.startIndex, item.endIndex+1));
-        highlight.addClass('highlight');
-        $('.text').addClass('fadeInUp');
-        $('.text').html(highlight);
-        $('.text').append(sentence.slice(item.endIndex+1));
-      })
+      // res.entities.forEach(function(item) {
+      //   console.log(item);
+      //   var highlight = $('<b/>').text(txt.slice(item.startIndex, item.endIndex+1));
+      //   highlight.addClass('highlight');
+      //   $('.text').addClass('fadeInUp');
+      //   $('.text').html(highlight);
+      //   $('.text').append(sentence.slice(item.endIndex+1));
+      // })
+
     }
+    
   });
 }
-  recognition.start();
+setInterval(function(){recognition.start();}, 6000);
+// recognition.start();
   
