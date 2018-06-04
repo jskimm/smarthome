@@ -148,7 +148,7 @@ recognition.onresult = function(event) {
         /* SEARCH */
         case "Search":
           var Search = res.entities[0];
-          if (Search.type == "builtin.keyPhrase"){
+          if (Search.type == "builtin.Search"){
             console.log(Search.entity+" 검색");
             window.open('https://www.google.com/search?q='+Search.entity,'_blank');
           }
