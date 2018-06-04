@@ -96,7 +96,14 @@ recognition.onresult = function(event) {
         /* DUST CHECK */ 
         case "Dust_check":
           xhr_get_value('GET', 'dust', function(dust) {
-            $('.intent').text("현재 미세먼지 농도는 "+dust+" 입니다.");
+            if(dust>0){
+              $('.intent').text("현재 미세먼지 농도는 "+dust+" 입니다.\n 현재 미세먼지 좋다.");  
+            }else if(dust >=0 && dust<100) {
+              $('.intent').text("현재 미세먼지 농도는 "+dust+" 입니다.\n 현재 미세먼지 보통.");
+            }else{
+              $('.intent').text("현재 미세먼지 농도는 "+dust+" 입니다.\n 현재 미세먼지 나쁘다.");
+            }
+           
           });
           break;
         
