@@ -4,7 +4,6 @@ recognition.continuous = false;
 // recognition.interimResults = true;
 console.log(recognition);
 recognition.lang = "ko-KR";
-var q = '';
 /* COMPONENT */
 recognition.onresult = function(event) {
   var sentence = event.results[event.results.length-1][0].transcript.trim();
@@ -138,7 +137,6 @@ recognition.onresult = function(event) {
         case "Search":
           res.entities.forEach(function(item) {
             if (item.type == "builtin.keyPhrase"){
-              console.log(item.entity+" 검색");
               window.open('https://www.google.com/search?q='+item.entity,'_blank');
             }
           });
