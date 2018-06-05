@@ -102,7 +102,16 @@ recognition.onresult = function(event) {
             });
           });
           break;
+        /* Air conditioner*/
+        case "air_conditioner_on": 
+          xhr_open('GET', 'LAIRL');
+          $('.intent').text("에어컨 껐습니다.");
+          break;
 
+        case "air_conditioner_off": 
+          xhr_open('GET', 'HAIRL');
+          $('.intent').text("에어컨 켰습니다.");
+          break;
         /* WINDOW */ 
         case "window_open": 
           xhr_open('GET', 'HS');
@@ -118,11 +127,11 @@ recognition.onresult = function(event) {
         case "Gas_check": 
           xhr_get_value('GET', 'gas', function(gas) {
             if(gas<500){
-              $('.intent').text("현재 가스 수치는 "+gas+" 입니다.");  
+              $('.intent').text("현재 가스 수치는 "+gas+" 입니다.\n 현재 안전.");  
             }else if(gas >=500 && gas<700) {
-              $('.intent').text("현재 가스 수치는 "+gas+" 입니다.");
+              $('.intent').text("현재 가스 수치는 "+gas+" 입니다.\n 현재 보통.");
             }else{
-              $('.intent').text("현재 가스 수치는 "+gas+" 입니다.");
+              $('.intent').text("현재 가스 수치는 "+gas+" 입니다.\n 현재 위험.");
             }
           });
           break;
