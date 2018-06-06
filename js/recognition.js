@@ -105,12 +105,12 @@ recognition.onresult = function(event) {
           break;
 
         /* Air conditioner*/
-        case "air_conditioner_on": 
+        case "air_conditioner_off": 
           xhr_open('GET', 'LAIRL');
           $('.intent').text("에어컨 껐습니다.");
           break;
 
-        case "air_conditioner_off": 
+        case "air_conditioner_on": 
           xhr_open('GET', 'HAIRL');
           $('.intent').text("에어컨 켰습니다.");
           break;
