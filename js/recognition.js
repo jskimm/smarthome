@@ -8,7 +8,7 @@ recognition.lang = "ko-KR";
 recognition.onresult = function(event) {
   var sentence = event.results[event.results.length-1][0].transcript.trim();
   var url = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/32f607a4-d5db-420d-8676-2d97d034dd92?subscription-key=8eb8c0a2793f41bea76e8fa347684af7&verbose=true&timezoneOffset=0&q=';
-  var host = 'http://127.0.0.1:9999/test.html';
+  var host = 'http://192.168.43.142/';
   $('.text').removeClass('fadeInUp');
   console.log(sentence);
   
