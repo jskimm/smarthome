@@ -8,9 +8,9 @@ recognition.lang = "ko-KR";
 recognition.onresult = function(event) {
   var sentence = event.results[event.results.length-1][0].transcript.trim();
   var url = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/32f607a4-d5db-420d-8676-2d97d034dd92?subscription-key=8eb8c0a2793f41bea76e8fa347684af7&verbose=true&timezoneOffset=0&q=';
-  var host = 'http://192.168.43.142/';
+  var host = 'http://192.168.43.119/';
   $('.text').removeClass('fadeInUp');
-  console.log(sentence);
+  //console.log(sentence);
   
   /* XHR implementation */
   function xhr_open(method, path)  {
@@ -83,10 +83,11 @@ recognition.onresult = function(event) {
           break;
         case "Blue_light_on":
           xhr_open('GET', 'HB');
-          $('.intent').text("파랑 불을 컸습니다.");
+          $('.intent').text("파랑 불을 켰습니다.");
           break;
         
-          case "Blue_light_on":
+        /* LIVING_ROOM LIGHT */  
+        case "Blue_light_on":
           xhr_open('GET', 'HLIVL');
           $('.intent').text("거실 불을 컸습니다.");
           break;
@@ -94,6 +95,18 @@ recognition.onresult = function(event) {
           xhr_open('GET', 'LLIVL');
           $('.intent').text("거실 불을 컸습니다.");
           break;  
+
+        /* AIR CONDITIONER */
+        case "air_conditioner_on": 
+        xhr_open('GET', 'HAIRL');
+        $('.intent').text("에어컨을 켭니다.");
+        break;
+
+        case "air_conditioner_off": 
+          xhr_open('GET', 'LAIRL');
+          $('.intent').text("에어컨을 끕니다.");
+          break;
+
         /* TEMP HUM CHECK */ 
         case "Temp & humidity":
           xhr_get_value('GET', 'tmp', function(tmp) {
@@ -102,16 +115,7 @@ recognition.onresult = function(event) {
             });
           });
           break;
-        /* Air conditioner*/
-        case "air_conditioner_on": 
-          xhr_open('GET', 'LAIRL');
-          $('.intent').text("에어컨 껐습니다.");
-          break;
 
-        case "air_conditioner_off": 
-          xhr_open('GET', 'HAIRL');
-          $('.intent').text("에어컨 켰습니다.");
-          break;
         /* WINDOW */ 
         case "window_open": 
           xhr_open('GET', 'HS');
@@ -127,11 +131,11 @@ recognition.onresult = function(event) {
         case "Gas_check": 
           xhr_get_value('GET', 'gas', function(gas) {
             if(gas<500){
-              $('.intent').text("현재 가스 수치는 "+gas+" 입니다.\n 현재 안전.");  
+              $('.intent').text("현재 가스 수치는 안전합니다.");  
             }else if(gas >=500 && gas<700) {
-              $('.intent').text("현재 가스 수치는 "+gas+" 입니다.\n 현재 보통.");
+              $('.intent').text("현재 가스 수치는 보통입니다.");
             }else{
-              $('.intent').text("현재 가스 수치는 "+gas+" 입니다.\n 현재 위험.");
+              $('.intent').text("현재 가스 수치가 높습니다.");
             }
           });
           break;
@@ -151,19 +155,19 @@ recognition.onresult = function(event) {
           break;
         
         /* MUSIC ON/OFF */
-        case "music_off":
+        case "excited_music_on":
           xhr_open('GET', 'HFUNBU');
-          $('.intent').text("음악을 재생합니다.");
+          $('.intent').text("음악을 합니다.");
           break;
-        case " music_on":
-          xhr_open('GET', 'HBU');
+        case "Warm_music_on":
+          xhr_open('GET', 'HWARMBU');
           $('.intent').text("음악을 재생합니다.");
           break;
 
         /* SEARCH */
         case "Search":
           res.entities.forEach(function(item) {
-            if (item.type == "builtin.keyPhrase"){
+            if (item.type == "Search"){
               window.open('https://www.google.com/search?q='+item.entity,'_blank');
             }
           });
