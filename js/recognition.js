@@ -86,12 +86,7 @@ recognition.onresult = function(event) {
           $('.intent').text("파랑 불을 켰습니다.");
           break;
         
-<<<<<<< HEAD
-        /* LIVING_ROOM LIGHT */  
-        case "Blue_light_on":
-=======
           case "livingroom_light_on":
->>>>>>> 4e3b24b19524180bacb5e86734b380ad18c3be64
           xhr_open('GET', 'HLIVL');
           $('.intent').text("거실 불을 켰습니다.");
           break;
@@ -100,20 +95,6 @@ recognition.onresult = function(event) {
           $('.intent').text("거실 불을 껐습니다.");
           break;  
 
-<<<<<<< HEAD
-        /* AIR CONDITIONER */
-        case "air_conditioner_on": 
-        xhr_open('GET', 'HAIRL');
-        $('.intent').text("에어컨을 켭니다.");
-        break;
-
-        case "air_conditioner_off": 
-          xhr_open('GET', 'LAIRL');
-          $('.intent').text("에어컨을 끕니다.");
-          break;
-
-=======
->>>>>>> 4e3b24b19524180bacb5e86734b380ad18c3be64
         /* TEMP HUM CHECK */ 
         case "Temp & humidity":
           xhr_get_value('GET', 'tmp', function(tmp) {
@@ -122,9 +103,6 @@ recognition.onresult = function(event) {
             });
           });
           break;
-<<<<<<< HEAD
-
-=======
 
         /* Air conditioner*/
         case "air_conditioner_off": 
@@ -136,7 +114,7 @@ recognition.onresult = function(event) {
           xhr_open('GET', 'HAIRL');
           $('.intent').text("에어컨 켰습니다.");
           break;
->>>>>>> 4e3b24b19524180bacb5e86734b380ad18c3be64
+          
         /* WINDOW */ 
         case "window_open": 
           xhr_open('GET', 'HS');
@@ -152,19 +130,11 @@ recognition.onresult = function(event) {
         case "Gas_check": 
           xhr_get_value('GET', 'gas', function(gas) {
             if(gas<500){
-<<<<<<< HEAD
-              $('.intent').text("현재 가스 수치는 안전합니다.");  
-            }else if(gas >=500 && gas<700) {
-              $('.intent').text("현재 가스 수치는 보통입니다.");
-            }else{
-              $('.intent').text("현재 가스 수치가 높습니다.");
-=======
               $('.intent').text("현재 가스 수치는 안전 입니다.");  
             }else if(gas >=500 && gas<700) {
               $('.intent').text("현재 가스 수치는 보통 입니다.");
             }else{
               $('.intent').text("현재 가스 수치는 위험 입니다.");
->>>>>>> 4e3b24b19524180bacb5e86734b380ad18c3be64
             }
           });
           break;
